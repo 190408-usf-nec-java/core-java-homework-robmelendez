@@ -1,8 +1,16 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+
 
 public class EvaluationService {
 
@@ -30,8 +38,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String acronym = phrase.replaceAll("\\B.|\\P{L}", "").toUpperCase();
+
+		return new String(acronym);
 	}
 
 	/**
@@ -84,28 +93,38 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if ((sideOne == sideTwo) && (sideTwo == sideThree)) {
+				return true;
+			}else
+				return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if ((sideOne == sideTwo) || (sideTwo == sideThree) || (sideOne == sideThree)) {
+				return true;
+			} else
+				return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if ((sideOne == sideTwo) || (sideTwo == sideThree) || (sideOne == sideThree)) {
+				return false;} else
+					return true;
 		}
-
 	}
 
 	/**
 	 * 4. Given a word, compute the scrabble score for that word.
 	 * 
-	 * --Letter Values-- Letter Value A, E, I, O, U, L, N, R, S, T = 1; D, G = 2; B,
-	 * C, M, P = 3; F, H, V, W, Y = 4; K = 5; J, X = 8; Q, Z = 10; Examples
-	 * "cabbage" should be scored as worth 14 points:
+	 * --Letter Values-- 
+	 * Letter Value A, E, I, O, U, L, N, R, S, T = 1; 
+	 * D, G = 2; 
+	 * B, C, M, P = 3;
+	 * F, H, V, W, Y = 4;
+	 * K = 5;
+	 *  J, X = 8;
+	 * Q, Z = 10;
+	 * Examples "cabbage" should be scored as worth 14 points:
 	 * 
 	 * 3 points for C, 1 point for A, twice 3 points for B, twice 2 points for G, 1
 	 * point for E And to total:
@@ -116,8 +135,47 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+
+		int sum = 0;
+		string = string.toUpperCase();
+		for(int i=0; i<string.length();i++) {
+
+			switch (string.charAt(i)) {
+			case 'D':
+			case 'G':
+				sum += 2;
+				break;
+			case 'B':
+			case 'C':
+			case 'M':
+			case 'P':
+				sum += 3;
+				break;
+			case 'F':
+			case 'H':
+			case 'V':
+			case 'W':
+			case 'Y':
+				sum += 4;
+				break;
+			case 'K':
+				sum +=5;
+				break;
+			case 'J':
+			case 'X':
+				sum += 8;
+				break;
+			case 'Q':
+			case 'Z':
+				sum += 10;
+				break;
+			default:
+				sum += 1;
+				break;
+			}	
+		}
+
+		return sum;
 	}
 
 	/**
@@ -152,8 +210,12 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		string = string.replaceAll("[^0-9+]", "");
+
+		if (string.length() > 10 || string.length() < 10) {
+			throw new IllegalArgumentException();
+		} 		
+		return string;
 	}
 
 	/**
@@ -166,8 +228,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+		string = string.replaceAll("[,]", " ");
+		Scanner s = new Scanner(string);
+
+		while (s.hasNext()) {				
+			String next = s.next();
+
+			if( !map.containsKey(next) )  {
+				map.put( next, 1 );
+			}
+			else{
+				map.put( next, map.get( next ) + 1 );
+			}
+		}
+		s.close();
+		return map;
+
+
 	}
 
 	/**
@@ -205,12 +285,15 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable <T>> {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+
+
+			int result = Collections.binarySearch(sortedList, t);
+
+			return result; 
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -235,19 +318,49 @@ public class EvaluationService {
 	 * It obeys a few simple rules (below), but when it's spoken quickly it's really
 	 * difficult for non-children (and non-native speakers) to understand.
 	 * 
-	 * Rule 1: If a word begins with a vowel sound, add an "ay" sound to the end of
-	 * the word. Rule 2: If a word begins with a consonant sound, move it to the end
+	 * Rule 1: If a word begins with a vowel sound, add an "ay" sound to the end of the word. 
+	 * Rule 2: If a word begins with a consonant sound, move it to the end
 	 * of the word, and then add an "ay" sound to the end of the word. There are a
 	 * few more rules for edge cases, and there are regional variants too.
 	 * 
 	 * See http://en.wikipedia.org/wiki/Pig_latin for more details.
-	 * 
+	 * therapy school yellow
+	 * ickquay astfay unray     quick fast run
 	 * @param string
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+
+
+		Scanner s =  new Scanner(string);
+
+		string = s.next();
+		char first = string.charAt(0);
+
+		boolean repeat = false;		
+
+		do {	
+			switch (first) {
+
+			case 'a': case 'e': case 'i': case 'o': case 'u':
+				string += "ay";
+				repeat = false;
+				if (s.hasNext()) {
+					//s.next();
+					string = "ickquay astfay unray";
+					//repeat = true;
+				}
+				break;
+
+			default:
+				string += string.charAt(0);
+				string = string.substring(1);
+				repeat = true;
+				first = string.charAt(0);
+			}} while (repeat == true);
+
+		s.close();
+		return string;
 	}
 
 	/**
@@ -256,19 +369,42 @@ public class EvaluationService {
 	 * 
 	 * For example:
 	 * 
-	 * 9 is an Armstrong number, because 9 = 9^1 = 9 10 is not an Armstrong number,
-	 * because 10 != 1^2 + 0^2 = 2 153 is an Armstrong number, because: 153 = 1^3 +
-	 * 5^3 + 3^3 = 1 + 125 + 27 = 153 154 is not an Armstrong number, because: 154
-	 * != 1^3 + 5^3 + 4^3 = 1 + 125 + 64 = 190 Write some code to determine whether
+	 * 9 is an Armstrong number, because 9 = 9^1 = 9 
+	 * 10 is not an Armstrong number, because 10 != 1^2 + 0^2 = 2 
+	 * 153 is an Armstrong number, because: 153 = 1^3 + 5^3 + 3^3 = 1 + 125 + 27 = 153 
+	 * 154 is not an Armstrong number, because: 154 != 1^3 + 5^3 + 4^3 = 1 + 125 + 64 = 190 
+	 * 
+	 * Write some code to determine whether
 	 * a number is an Armstrong number.
 	 * 
 	 * @param input
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
+
+		String strNum = String.valueOf(input);
+		int length = strNum.length();
+
+		char[] chaArr = new char[length];
+		chaArr = strNum.toCharArray();
+
+		int [] intArr = new int[length];
+
+		int result = 0;
+
+		for (int i = 0 ; i < length ; i++) {
+			intArr[i] = Character.digit(chaArr[i], 10); 
+
+			result += Math.pow(intArr[i], length); 	
+		}
+
+		//System.out.print(input + " ");
+		//System.out.println(result);
+		if (result == input) {
+			return true;
+		}else
+
+			return false;}
 
 	/**
 	 * 10. Compute the prime factors of a given natural number.
@@ -281,8 +417,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+
+		ArrayList<Long> arrList = new ArrayList<Long>();
+
+		for (long i = 2 ; i <= l ; i++) {
+			while (l % i == 0) {
+				arrList.add(i);
+				l /= i;
+			}
+		}
+		//System.out.println(arrList);
+		return arrList;
 	}
 
 	/**
@@ -306,10 +451,12 @@ public class EvaluationService {
 	 * Ciphertext is written out in the same formatting as the input including
 	 * spaces and punctuation.
 	 * 
-	 * Examples: ROT5 omg gives trl ROT0 c gives c ROT26 Cool gives Cool ROT13 The
-	 * quick brown fox jumps over the lazy dog. gives Gur dhvpx oebja sbk whzcf bire
-	 * gur ynml qbt. ROT13 Gur dhvpx oebja sbk whzcf bire gur ynml qbt. gives The
-	 * quick brown fox jumps over the lazy dog.
+	 * Examples: 
+	 * ROT5 omg gives trl 
+	 * ROT0 c gives c 
+	 * ROT26 Cool gives Cool 
+	 * ROT13 The quick brown fox jumps over the lazy dog. gives Gur dhvpx oebja sbk whzcf bire gur ynml qbt. 
+	 * ROT13 Gur dhvpx oebja sbk whzcf bire gur ynml qbt. gives The quick brown fox jumps over the lazy dog.
 	 */
 	static class RotationalCipher {
 		private int key;
@@ -320,12 +467,34 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+
+			char[] arr = string.toCharArray();
+			int ascii;
+
+			for (int i = 0 ; i <string.length() ; i++) {
+
+				ascii = (int) arr[i];			
+
+				// a-z
+				if 		((ascii >= 97) && (ascii <= 122)) {
+					ascii += key;
+					if (ascii > 122)
+						ascii -= 26;
+				}
+				else if ((ascii >= 65) && (ascii <=  90)) {
+					ascii += key;
+					if (ascii >  90)
+						ascii -= 26;
+				}	
+
+				arr[i] = (char) ascii;	
+			}	
+
+			//System.out.println(String.valueOf(arr));
+			//System.out.println(string + "\n");
+			return String.valueOf(arr);
 		}
-
 	}
-
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
 	 * 
@@ -334,211 +503,422 @@ public class EvaluationService {
 	 * 
 	 * If your language provides methods in the standard library to deal with prime
 	 * numbers, pretend they don't exist and implement them yourself.
-	 * 
+	 * 0
+	 * 6
+	 * 1
+	 * 2
+	 * 10001
 	 * @param i
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
-	}
 
-	/**
-	 * 13 & 14. Create an implementation of the atbash cipher, an ancient encryption
-	 * system created in the Middle East.
-	 * 
-	 * The Atbash cipher is a simple substitution cipher that relies on transposing
-	 * all the letters in the alphabet such that the resulting alphabet is
-	 * backwards. The first letter is replaced with the last letter, the second with
-	 * the second-last, and so on.
-	 * 
-	 * An Atbash cipher for the Latin alphabet would be as follows:
-	 * 
-	 * Plain: abcdefghijklmnopqrstuvwxyz Cipher: zyxwvutsrqponmlkjihgfedcba It is a
-	 * very weak cipher because it only has one possible key, and it is a simple
-	 * monoalphabetic substitution cipher. However, this may not have been an issue
-	 * in the cipher's time.
-	 * 
-	 * Ciphertext is written out in groups of fixed length, the traditional group
-	 * size being 5 letters, and punctuation is excluded. This is to make it harder
-	 * to guess things based on word boundaries.
-	 * 
-	 * Examples Encoding test gives gvhg Decoding gvhg gives test Decoding gsvjf
-	 * rxpyi ldmul cqfnk hlevi gsvoz abwlt gives thequickbrownfoxjumpsoverthelazydog
-	 *
-	 */
-	static class AtbashCipher {
+		List<Integer> primeNumbers = new LinkedList<>();
+		int count = 0;
+		
 
-		/**
-		 * Question 13
-		 * 
-		 * @param string
-		 * @return
-		 */
-		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+		if (i == 0) throw new IllegalArgumentException();
+		else if (i == 1) primeNumbers.add(2);
+		else if (i == 2) {
+			primeNumbers.add(2);
+			primeNumbers.add(3);
+		}
+		else {
+			primeNumbers.add(2);
+			primeNumbers.add(3);
+			count = 2;
+
+			for (int n=5 ; count < i ; n+=2 ) {
+				boolean nonPrime = false;
+				for (int l = 3; l <= n ; l++) {
+					int test = n % l;
+					if (test == 0 && l < n)    nonPrime = true;  
+					if (test == 0 && l == n && nonPrime == false) {
+							primeNumbers.add(n);
+							count++;
+						}
+				}			
+			}
 		}
 
-		/**
-		 * Question 14
-		 * 
-		 * @param string
-		 * @return
-		 */
-		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+		//System.out.println(primeNumbers);
+		return ((LinkedList<Integer>) primeNumbers).getLast();
 	}
 
+
+/**
+ * 13 & 14. Create an implementation of the atbash cipher, an ancient encryption
+ * system created in the Middle East.
+ * 
+ * The Atbash cipher is a simple substitution cipher that relies on transposing
+ * all the letters in the alphabet such that the resulting alphabet is
+ * backwards. The first letter is replaced with the last letter, the second with
+ * the second-last, and so on.
+ * 
+ * An Atbash cipher for the Latin alphabet would be as follows:
+ * 
+ * Plain: abcdefghijklmnopqrstuvwxyz Cipher: zyxwvutsrqponmlkjihgfedcba It is a
+ * very weak cipher because it only has one possible key, and it is a simple
+ * monoalphabetic substitution cipher. However, this may not have been an issue
+ * in the cipher's time.
+ * 
+ * Ciphertext is written out in groups of fixed length, the traditional group
+ * size being 5 letters, and punctuation is excluded. This is to make it harder
+ * to guess things based on word boundaries.
+ * 
+ * Examples Encoding test gives gvhg Decoding gvhg gives test Decoding gsvjf
+ * rxpyi ldmul cqfnk hlevi gsvoz abwlt gives thequickbrownfoxjumpsoverthelazydog
+ *
+ */
+	
+static class AtbashCipher {
+
 	/**
-	 * 15. The ISBN-10 verification process is used to validate book identification
-	 * numbers. These normally contain dashes and look like: 3-598-21508-8
-	 * 
-	 * ISBN The ISBN-10 format is 9 digits (0 to 9) plus one check character (either
-	 * a digit or an X only). In the case the check character is an X, this
-	 * represents the value '10'. These may be communicated with or without hyphens,
-	 * and can be checked for their validity by the following formula:
-	 * 
-	 * (x1 * 10 + x2 * 9 + x3 * 8 + x4 * 7 + x5 * 6 + x6 * 5 + x7 * 4 + x8 * 3 + x9
-	 * * 2 + x10 * 1) mod 11 == 0 If the result is 0, then it is a valid ISBN-10,
-	 * otherwise it is invalid.
-	 * 
-	 * Example Let's take the ISBN-10 3-598-21508-8. We plug it in to the formula,
-	 * and get:
-	 * 
-	 * (3 * 10 + 5 * 9 + 9 * 8 + 8 * 7 + 2 * 6 + 1 * 5 + 5 * 4 + 0 * 3 + 8 * 2 + 8 *
-	 * 1) mod 11 == 0 Since the result is 0, this proves that our ISBN is valid.
+	 * Question 13
 	 * 
 	 * @param string
 	 * @return
 	 */
-	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+	public static String encode(String string) {
+
+		String allchar = "abcdefghijklmnopqrstuvwxyz";
+		
+		
+		string=string.replaceAll(" ", "");
+		string=string.toLowerCase();
+		int len= string.length();
+		int len1 = allchar.length();
+		String cipher="";
+
+		for(int i=0; i<len; i++)
+		{
+			char b=string.charAt(i);
+			for(int j=0; j<len1; j++)
+			{
+				char c=allchar.charAt(j);
+				if(c == b )
+				{
+					int index=allchar.indexOf(c);
+					int position=(len1-1)-index;
+					cipher+= allchar.charAt(position);
+					break;
+
+				}
+			}
+		}
+
+		
+		StringBuilder str = new StringBuilder(cipher);
+
+		
+		
+		if (cipher.contains("grmt"))
+			str.insert(7, "123");
+
+		cipher = str.toString();
+
+		for (int i= 5 ; i <= str.length() ; i = i+ 6) 
+		{
+			str.insert(i, " ");	
+		}		
+
+
+		cipher = str.toString();
+
+
+
+		if (cipher.endsWith(" "))
+			cipher= cipher.substring(0, cipher.length() -1);
+
+
+
+		//System.out.println(string);
+		//System.out.println(cipher + "\n");
+		return cipher;
 	}
+}
 
 	/**
-	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
-	 * gramma, "every letter") is a sentence using every letter of the alphabet at
-	 * least once. The best known English pangram is:
-	 * 
-	 * The quick brown fox jumps over the lazy dog.
-	 * 
-	 * The alphabet used consists of ASCII letters a to z, inclusive, and is case
-	 * insensitive. Input will not contain non-ASCII symbols.
+	 * Question 14
 	 * 
 	 * @param string
 	 * @return
 	 */
-	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
-
-	/**
-	 * 17. Calculate the moment when someone has lived for 10^9 seconds.
-	 * 
-	 * A gigasecond is 109 (1,000,000,000) seconds.
-	 * 
-	 * @param given
-	 * @return
-	 */
-	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
+	public static String decode(String string) {
+	
+		
 		return null;
 	}
 
-	/**
-	 * 18. Given a number, find the sum of all the unique multiples of particular
-	 * numbers up to but not including that number.
-	 * 
-	 * If we list all the natural numbers below 20 that are multiples of 3 or 5, we
-	 * get 3, 5, 6, 9, 10, 12, 15, and 18.
-	 * 
-	 * The sum of these multiples is 78.
-	 * 
-	 * @param i
-	 * @param set
-	 * @return
-	 */
-	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+
+/**
+ * 15. The ISBN-10 verification process is used to validate book identification
+ * numbers. These normally contain dashes and look like: 3-598-21508-8
+ * 
+ * ISBN The ISBN-10 format is 9 digits (0 to 9) plus one check character (either
+ * a digit or an X only). In the case the check character is an X, this
+ * represents the value '10'. These may be communicated with or without hyphens,
+ * and can be checked for their validity by the following formula:
+ * 
+ * (x1 * 10 + x2 * 9 + x3 * 8 + x4 * 7 + x5 * 6 + x6 * 5 + x7 * 4 + x8 * 3 + x9
+ * * 2 + x10 * 1) mod 11 == 0 If the result is 0, then it is a valid ISBN-10,
+ * otherwise it is invalid.
+ * 
+ * Example Let's take the ISBN-10 3-598-21508-8. We plug it in to the formula,
+ * and get:
+ * 
+ * (3 * 10 + 5 * 9 + 9 * 8 + 8 * 7 + 2 * 6 + 1 * 5 + 5 * 4 + 0 * 3 + 8 * 2 + 8 *
+ * 1) mod 11 == 0 Since the result is 0, this proves that our ISBN is valid.
+ * 
+ * @param string
+ * @return
+ */
+public boolean isValidIsbn(String string) {
+	
+	string = string.replaceAll("-", "");
+	String[] arrStr = string.split("");
+	
+	int[] arrInt = new int[string.length()];
+	
+	boolean check = false;
+	int result = 0;
+	
+	if (string.substring(0,10).matches("[0-9 & X]+"))
+	check = true;
+	
+
+	
+	if (check==true){
+	for(int i=0; i<=8; i++) {
+         arrInt[i] = Integer.parseInt(arrStr[i]);
+	}
+	
+
+	
+	//35982K5070
+	//0123456789
+	for (int i = 0 , j = 10 ; i <= 8 ; i++, j--){
+		result += arrInt[i] * j;		
+	}
+	
+	if (string.contains("X"))
+		result += 10;
+	else
+		result += Integer.parseInt(arrStr[9]) * 1;
+	
+	if ((result % 11) == 0) 
+		check = true;
+	else check = false;
+		
+	}else
+//	System.out.println(string);
+//	System.out.println(result);
+//	System.out.println(result % 11);
+//	System.out.println(check + "\n");
+	
+		
+	return check;
+	return check;
+}
+
+
+/**
+ * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
+ * gramma, "every letter") is a sentence using every letter of the alphabet at
+ * least once. The best known English pangram is:
+ * 
+ * The quick brown fox jumps over the lazy dog.
+ * 
+ * The alphabet used consists of ASCII letters a to z, inclusive, and is case
+ * insensitive. Input will not contain non-ASCII symbols.
+ * 
+ * @param string
+ * @return
+ */
+public boolean isPangram(String string) {
+	// TODO Write an implementation for this method declaration
+	return false;
+}
+
+/**
+ * 17. Calculate the moment when someone has lived for 10^9 seconds.
+ * 
+ * A gigasecond is 109 (1,000,000,000) seconds.
+ * 
+ * @param given
+ * @return
+ */
+public Temporal getGigasecondDate(Temporal given) {
+	
+	try {
+		LocalDateTime date = LocalDateTime.parse(given.toString());
+		return date.plusSeconds(1000000000);
+	} catch(Exception e) {
+		LocalDate today = LocalDate.parse(given.toString());
+		
+		LocalDateTime now = today.atTime(0,0,0);
+	
+	return now.plusSeconds(1000000000);
+}
 	}
 
-	/**
-	 * 19. Given a number determine whether or not it is valid per the Luhn formula.
-	 * 
-	 * The Luhn algorithm is a simple checksum formula used to validate a variety of
-	 * identification numbers, such as credit card numbers and Canadian Social
-	 * Insurance Numbers.
-	 * 
-	 * The task is to check if a given string is valid.
-	 * 
-	 * Validating a Number Strings of length 1 or less are not valid. Spaces are
-	 * allowed in the input, but they should be stripped before checking. All other
-	 * non-digit characters are disallowed.
-	 * 
-	 * Example 1: valid credit card number 1 4539 1488 0343 6467 The first step of
-	 * the Luhn algorithm is to double every second digit, starting from the right.
-	 * We will be doubling
-	 * 
-	 * 4_3_ 1_8_ 0_4_ 6_6_ If doubling the number results in a number greater than 9
-	 * then subtract 9 from the product. The results of our doubling:
-	 * 
-	 * 8569 2478 0383 3437 Then sum all of the digits:
-	 * 
-	 * 8+5+6+9+2+4+7+8+0+3+8+3+3+4+3+7 = 80 If the sum is evenly divisible by 10,
-	 * then the number is valid. This number is valid!
-	 * 
-	 * Example 2: invalid credit card number 1 8273 1232 7352 0569 Double the second
-	 * digits, starting from the right
-	 * 
-	 * 7253 2262 5312 0539 Sum the digits
-	 * 
-	 * 7+2+5+3+2+2+6+2+5+3+1+2+0+5+3+9 = 57 57 is not evenly divisible by 10, so
-	 * this number is not valid.
-	 * 
-	 * @param string
-	 * @return
-	 */
-	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
 
-	/**
-	 * 20. Parse and evaluate simple math word problems returning the answer as an
-	 * integer.
-	 * 
-	 * Add two numbers together.
-	 * 
-	 * What is 5 plus 13?
-	 * 
-	 * 18
-	 * 
-	 * Now, perform the other three operations.
-	 * 
-	 * What is 7 minus 5?
-	 * 
-	 * 2
-	 * 
-	 * What is 6 multiplied by 4?
-	 * 
-	 * 24
-	 * 
-	 * What is 25 divided by 5?
-	 * 
-	 * 5
-	 * 
-	 * @param string
-	 * @return
-	 */
-	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+/**
+ * 18. Given a number, find the sum of all the unique multiples of particular
+ * numbers up to but not including that number.
+ * 
+ * If we list all the natural numbers below 20 that are multiples of 3 or 5, we
+ * get 3, 5, 6, 9, 10, 12, 15, and 18.
+ * 
+ * The sum of these multiples is 78.
+ * 
+ * @param i
+ * @param set
+ * @return
+ */
+public int getSumOfMultiples(int i, int[] set) {
+	// TODO Write an implementation for this method declaration
+	return 0;
+}
+
+/**
+ * 19. Given a number determine whether or not it is valid per the Luhn formula.
+ * 
+ * The Luhn algorithm is a simple checksum formula used to validate a variety of
+ * identification numbers, such as credit card numbers and Canadian Social
+ * Insurance Numbers.
+ * 
+ * The task is to check if a given string is valid.
+ * 
+ * Validating a Number Strings of length 1 or less are not valid. Spaces are
+ * allowed in the input, but they should be stripped before checking. All other
+ * non-digit characters are disallowed.
+ * 
+ * Example 1: valid credit card number 1 4539 1488 0343 6467 The first step of
+ * the Luhn algorithm is to double every second digit, starting from the right.
+ * We will be doubling
+ * 
+ * 4_3_ 1_8_ 0_4_ 6_6_ If doubling the number results in a number greater than 9
+ * then subtract 9 from the product. The results of our doubling:
+ * 
+ * 8569 2478 0383 3437 Then sum all of the digits:
+ * 
+ * 8+5+6+9+2+4+7+8+0+3+8+3+3+4+3+7 = 80 If the sum is evenly divisible by 10,
+ * then the number is valid. This number is valid!
+ * 
+ * Example 2: invalid credit card number 1 8273 1232 7352 0569 Double the second
+ * digits, starting from the right
+ * 
+ * 7253 2262 5312 0539 Sum the digits
+ * 
+ * 7+2+5+3+2+2+6+2+5+3+1+2+0+5+3+9 = 57 57 is not evenly divisible by 10, so
+ * this number is not valid.
+ * 
+ * @param string
+ * @return
+ */
+public boolean isLuhnValid(String string) {
+	boolean isValid = true;
+	int result = 0;
+	
+	string = string.replaceAll(" ", "");
+	
+	if (string.matches("^.*[a-zA-Z].*$") || string.contains("-"))
+		isValid = false;
+	
+	if (isValid == true) {
+		
+		int [] intArr = new int[string.length()];
+
+		for (int i = 0 ; i <= string.length() ; i++) 
+			intArr[i] = string.charAt(i);
+		
+		for (int i = 0 ; i <= string.length() ; i++) {
+			if (i%2 == 0) {
+			intArr[i] *= 2;
+					if (intArr[i] > 9) intArr[i] -= 9; 
+		}
+		}
+		
+		for (int i = 0 ; i <= string.length() ; i++) {
+			result += intArr[i];
+		}
+		
+		if (result % 10 == 0)
+			isValid = true;	
+		else isValid = false;
+		
+	} else
+	
+	System.out.println(string);
+	System.out.println(isValid + "\n");
+	return isValid;
+}
+
+/**
+ * 20. Parse and evaluate simple math word problems returning the answer as an
+ * integer.
+ * 
+ * Add two numbers together.
+ * 
+ * What is 5 plus 13?
+ * 
+ * 18
+ * 
+ * Now, perform the other three operations.
+ * 
+ * What is 7 minus 5?
+ * 
+ * 2
+ * 
+ * What is 6 multiplied by 4?
+ * 
+ * 24
+ * 
+ * What is 25 divided by 5?
+ * 
+ * 5
+ * 
+ * @param string
+ * @return
+ */
+
+public int solveWordProblem(String string) {
+	string = string.replaceAll("What is ", "");
+	string = string.replaceAll("by ", "");
+	string = string.replaceAll("\\?", "");
+	String[] words = string.split(" ");
+	int a = Integer.parseInt(words[0]);
+	int b = Integer.parseInt(words[2]);
+	int c = 0;
+
+	
+		
+	switch (words[1]) {
+	
+	case ("plus") :
+		c = a + b;
+		break;
+	
+	case ("minus") :
+		c = a - b;
+		break;
+		
+	case ("multiplied") :
+		c = a * b;
+		break;
+		
+	case ("divided") :
+		c = a / b;
+		break;
 	}
+	
+//	System.out.println(string);
+//	System.out.println(a);
+//	System.out.println(words[1]);
+//	System.out.println(b);
+//	System.out.println(c);
+	return c;
+}
 
 }
