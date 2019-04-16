@@ -499,27 +499,27 @@ public class EvaluationServiceTest {
 //	/*******************************************************************
 //	 * Question 14
 //	 ******************************************************************/
-//	@Test
-//	public void testDecodeExercism() {
-//		assertEquals("exercism", EvaluationService.AtbashCipher.decode("vcvix rhn"));
-//	}
-//
-//	@Test
-//	public void testDecodeASentence() {
-//		assertEquals("anobstacleisoftenasteppingstone",
-//				EvaluationService.AtbashCipher.decode("zmlyh gzxov rhlug vmzhg vkkrm thglm v"));
-//	}
-//
-//	@Test
-//	public void testDecodeNumbers() {
-//		assertEquals("testing123testing", EvaluationService.AtbashCipher.decode("gvhgr mt123 gvhgr mt"));
-//	}
-//
-//	@Test
-//	public void testDecodeAllTheLetters() {
-//		assertEquals("thequickbrownfoxjumpsoverthelazydog",
-//				EvaluationService.AtbashCipher.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt"));
-//	}
+	@Test
+	public void testDecodeExercism() {
+		assertEquals("exercism", EvaluationService.AtbashCipher.decode("vcvix rhn"));
+	}
+
+	@Test
+	public void testDecodeASentence() {
+		assertEquals("anobstacleisoftenasteppingstone",
+				EvaluationService.AtbashCipher.decode("zmlyh gzxov rhlug vmzhg vkkrm thglm v"));
+	}
+
+	@Test
+	public void testDecodeNumbers() {
+		assertEquals("testing123testing", EvaluationService.AtbashCipher.decode("gvhgr mt123 gvhgr mt"));
+	}
+
+	@Test
+	public void testDecodeAllTheLetters() {
+		assertEquals("thequickbrownfoxjumpsoverthelazydog",
+				EvaluationService.AtbashCipher.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt"));
+	}
 //
 //	/*******************************************************************
 //	 * Question 15
@@ -553,111 +553,111 @@ public class EvaluationServiceTest {
 //	/*******************************************************************
 //	 * Question 16
 //	 ******************************************************************/
-//	@Test
-//	public void emptySentenceIsNotPangram() {
-//		assertFalse(evaluationService.isPangram(""));
-//	}
-//
-//	@Test
-//	public void recognizesPerfectLowerCasePangram() {
-//		assertTrue(evaluationService.isPangram("abcdefghijklmnopqrstuvwxyz"));
-//	}
-//
-//	@Test
-//	public void pangramWithOnlyLowerCaseLettersIsRecognizedAsPangram() {
-//		assertTrue(evaluationService.isPangram("the quick brown fox jumps over the lazy dog"));
-//	}
-//
-//	@Test
-//	public void phraseMissingCharacterXIsNotPangram() {
-//		assertFalse(evaluationService.isPangram("a quick movement of the enemy will jeopardize five gunboats"));
-//	}
-//
-//	@Test
-//	public void phraseMissingAnotherCharacterIsNotPangram() {
-//		assertFalse(evaluationService.isPangram("five boxing wizards jump quickly at it"));
-//	}
+	@Test
+	public void emptySentenceIsNotPangram() {
+		assertFalse(evaluationService.isPangram(""));
+	}
+
+	@Test
+	public void recognizesPerfectLowerCasePangram() {
+		assertTrue(evaluationService.isPangram("abcdefghijklmnopqrstuvwxyz"));
+	}
+
+	@Test
+	public void pangramWithOnlyLowerCaseLettersIsRecognizedAsPangram() {
+		assertTrue(evaluationService.isPangram("the quick brown fox jumps over the lazy dog"));
+	}
+
+	@Test
+	public void phraseMissingCharacterXIsNotPangram() {
+		assertFalse(evaluationService.isPangram("a quick movement of the enemy will jeopardize five gunboats"));
+	}
+
+	@Test
+	public void phraseMissingAnotherCharacterIsNotPangram() {
+		assertFalse(evaluationService.isPangram("five boxing wizards jump quickly at it"));
+	}
 
 //	/*******************************************************************
 //	 * Question 17
 //	 ******************************************************************/
-//	@Test
-//	public void modernTime() {
-//		assertEquals(LocalDateTime.of(2043, Month.JANUARY, 1, 1, 46, 40),
-//				evaluationService.getGigasecondDate(LocalDate.of(2011, Month.APRIL, 25)));
-//	}
-//
-//	@Test
-//	public void afterEpochTime() {
-//		assertEquals(LocalDateTime.of(2009, Month.FEBRUARY, 19, 1, 46, 40),
-//				evaluationService.getGigasecondDate(LocalDate.of(1977, Month.JUNE, 13)));
-//	}
-//
-//	@Test
-//	public void beforeEpochTime() {
-//		assertEquals(LocalDateTime.of(1991, Month.MARCH, 27, 1, 46, 40),
-//				evaluationService.getGigasecondDate(LocalDate.of(1959, Month.JULY, 19)));
-//	}
-//
-//	@Test
-//	public void withFullTimeSpecified() {
-//		assertEquals(LocalDateTime.of(2046, Month.OCTOBER, 2, 23, 46, 40),
-//				evaluationService.getGigasecondDate(LocalDateTime.of(2015, Month.JANUARY, 24, 22, 0, 0)));
-//	}
-//
-//	@Test
-//	public void withFullTimeSpecifiedAndDayRollover() {
-//		assertEquals(LocalDateTime.of(2046, Month.OCTOBER, 3, 1, 46, 39),
-//				evaluationService.getGigasecondDate(LocalDateTime.of(2015, Month.JANUARY, 24, 23, 59, 59)));
-//	}
+	@Test
+	public void modernTime() {
+		assertEquals(LocalDateTime.of(2043, Month.JANUARY, 1, 1, 46, 40),
+				evaluationService.getGigasecondDate(LocalDate.of(2011, Month.APRIL, 25)));
+	}
+
+	@Test
+	public void afterEpochTime() {
+		assertEquals(LocalDateTime.of(2009, Month.FEBRUARY, 19, 1, 46, 40),
+				evaluationService.getGigasecondDate(LocalDate.of(1977, Month.JUNE, 13)));
+	}
+
+	@Test
+	public void beforeEpochTime() {
+		assertEquals(LocalDateTime.of(1991, Month.MARCH, 27, 1, 46, 40),
+				evaluationService.getGigasecondDate(LocalDate.of(1959, Month.JULY, 19)));
+	}
+
+	@Test
+	public void withFullTimeSpecified() {
+		assertEquals(LocalDateTime.of(2046, Month.OCTOBER, 2, 23, 46, 40),
+				evaluationService.getGigasecondDate(LocalDateTime.of(2015, Month.JANUARY, 24, 22, 0, 0)));
+	}
+
+	@Test
+	public void withFullTimeSpecifiedAndDayRollover() {
+		assertEquals(LocalDateTime.of(2046, Month.OCTOBER, 3, 1, 46, 39),
+				evaluationService.getGigasecondDate(LocalDateTime.of(2015, Month.JANUARY, 24, 23, 59, 59)));
+	}
 
 //	/*******************************************************************
 //	 * Question 18
 //	 ******************************************************************/
-//	@Test
-//	public void testSumOfMultiplesOf4and6UpToFifteen() {
-//
-//		int[] set = { 4, 6 };
-//		int output = evaluationService.getSumOfMultiples(15, set);
-//		assertEquals(30, output);
-//
-//	}
-//
-//	@Test
-//	public void testSumOfMultiplesOf5and6and8UpToOneHundredFifty() {
-//
-//		int[] set = { 5, 6, 8 };
-//		int output = evaluationService.getSumOfMultiples(150, set);
-//		assertEquals(4419, output);
-//
-//	}
-//
-//	@Test
-//	public void testSumOfMultiplesOf5and25UpToFiftyOne() {
-//
-//		int[] set = { 5, 25 };
-//		int output = evaluationService.getSumOfMultiples(51, set);
-//		assertEquals(275, output);
-//
-//	}
-//
-//	@Test
-//	public void testSumOfMultiplesOf43and47UpToTenThousand() {
-//
-//		int[] set = { 43, 47 };
-//		int output = evaluationService.getSumOfMultiples(10000, set);
-//		assertEquals(2203160, output);
-//
-//	}
-//
-//	@Test
-//	public void testSumOfMultiplesOfOneUpToOneHundred() {
-//
-//		int[] set = { 1 };
-//		int output = evaluationService.getSumOfMultiples(100, set);
-//		assertEquals(4950, output);
-//
-//	}
+	@Test
+	public void testSumOfMultiplesOf4and6UpToFifteen() {
+
+		int[] set = { 4, 6 };
+		int output = evaluationService.getSumOfMultiples(15, set);
+		assertEquals(30, output);
+
+	}
+	
+	@Test
+	public void testSumOfMultiplesOf5and6and8UpToOneHundredFifty() {
+
+		int[] set = { 5, 6, 8 };
+		int output = evaluationService.getSumOfMultiples(150, set);
+		assertEquals(4419, output);
+
+	}
+
+	@Test
+	public void testSumOfMultiplesOf5and25UpToFiftyOne() {
+
+		int[] set = { 5, 25 };
+		int output = evaluationService.getSumOfMultiples(51, set);
+		assertEquals(275, output);
+
+	}
+
+	@Test
+	public void testSumOfMultiplesOf43and47UpToTenThousand() {
+
+		int[] set = { 43, 47 };
+		int output = evaluationService.getSumOfMultiples(10000, set);
+		assertEquals(2203160, output);
+
+	}
+
+	@Test
+	public void testSumOfMultiplesOfOneUpToOneHundred() {
+
+		int[] set = { 1 };
+		int output = evaluationService.getSumOfMultiples(100, set);
+		assertEquals(4950, output);
+
+	}
 
 //	/*******************************************************************
 //	 * Question 19
